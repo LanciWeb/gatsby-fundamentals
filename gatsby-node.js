@@ -1,7 +1,26 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
+const path = require("path")
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(`
+    query {
+      allFeedRepubblica {
+        edges {
+          node {
+            title
+            id
+            content
+            pubDate
+          }
+        }
+      }
+    }
+  `)
 
-// You can delete this file if you're not using it
+  result.data.allFeedRepubblica.edges.forEach(({ node }) => {
+    createPage({
+      path: node.id,
+      context: { id: node.id },
+      component: path.resolve("./src/templates/repubblica-template.js"),
+    })
+  })
+}

@@ -36,6 +36,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-source-rss-feed`,
+      options: {
+        url: `https://www.repubblica.it/rss/homepage/rss2.0.xml`,
+        name: `Repubblica`,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
