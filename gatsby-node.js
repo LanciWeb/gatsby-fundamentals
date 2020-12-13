@@ -13,6 +13,16 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              path
+            }
+            id
+          }
+        }
+      }
     }
   `)
 
@@ -21,6 +31,13 @@ exports.createPages = async ({ graphql, actions }) => {
       path: node.id,
       context: { id: node.id },
       component: path.resolve("./src/templates/repubblica-template.js"),
+    })
+  })
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.path,
+      context: { id: node.id },
+      component: path.resolve("./src/templates/markdown-template.js"),
     })
   })
 }
