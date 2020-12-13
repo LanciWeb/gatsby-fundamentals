@@ -4,11 +4,20 @@ import { graphql, useStaticQuery } from "gatsby"
 
 const StarWars = () => {
   const data = useStaticQuery(query)
-  const characters = data.allInternalStarWarsCharacter.nodes
+  const characters = data.allStarWarsCharacter.nodes
   return (
     <Layout>
-      {characters.map(({ id, name }) => (
-        <h2 key={id}>{name}</h2>
+      {characters.map(({ id, name, films }) => (
+        <>
+          <h2 key={id}>{name}</h2>
+          {films && (
+            <ul>
+              {films.map(({ id, title }) => (
+                <li key={id}>{title}</li>
+              ))}
+            </ul>
+          )}
+        </>
       ))}
     </Layout>
   )
@@ -16,10 +25,14 @@ const StarWars = () => {
 
 const query = graphql`
   {
-    allInternalStarWarsCharacter {
+    allStarWarsCharacter {
       nodes {
         id
         name
+        films {
+          title
+          id
+        }
       }
     }
   }

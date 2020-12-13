@@ -46,9 +46,6 @@ module.exports = {
     {
       resolve: "gatsby-source-apiserver",
       options: {
-        // Type prefix of entities from server
-        typePrefix: "internal__",
-
         // The url, this should be the endpoint you are attempting to pull data from
         url: `https://swapi.dev/api/people/`,
 
@@ -65,9 +62,31 @@ module.exports = {
         entityLevel: `results`,
       },
     },
+    {
+      resolve: "gatsby-source-apiserver",
+      options: {
+        // The url, this should be the endpoint you are attempting to pull data from
+        url: `https://swapi.dev/api/films/`,
 
+        method: "get",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        // Name of the data to be downloaded.  Will show in graphQL or be saved to a file
+        // using this name. i.e. posts.json
+        name: `StarWarsFilm`,
+
+        entityLevel: `results`,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
+
+  mapping: {
+    "StarWarsCharacter.films": "StarWarsFilm.url",
+  },
 }
